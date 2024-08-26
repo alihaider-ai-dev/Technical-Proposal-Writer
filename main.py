@@ -2,8 +2,12 @@ import streamlit as st
 from DataIngestion import SaveTextFromPDF, read_text_from_pkl
 from ProposalWriterAgent import InvokeAgent
 import os
+from saving_utils import convert, html_to_word
+from document_utils import process_document
 
-st.set_page_config(page_icon="💬", layout="wide", page_title="Proposal AI")
+st.set_page_config(page_icon="💬",
+                   layout="wide",
+                   page_title="Arweqah Proposal AI")
 
 
 def icon(emoji: str):
@@ -14,7 +18,8 @@ def icon(emoji: str):
     )
 
 
-st.header("Proposal Writer", divider="rainbow", anchor=False)
+st.sidebar.image("شعار_أروقة_page-0001-removebg-preview.png",
+                 caption="Arweqah Proposal Generation AI")
 
 st.subheader("Upload Request for Proposal")
 rfp_file = st.file_uploader("Choose a file for Request for Proposal",
@@ -22,42 +27,80 @@ rfp_file = st.file_uploader("Choose a file for Request for Proposal",
 
 btn = st.button("Generate Proposal", use_container_width=True)
 save_path = None
+
+if 'full_response' not in st.session_state:
+    st.session_state['full_response'] = None
+
 if rfp_file is not None and btn:
     # Save the uploaded file temporarily
     save_path = os.path.join("tempDir", rfp_file.name)
-
-    # Create the directory if it doesn't exist
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
 
     with open(save_path, "wb") as f:
         f.write(rfp_file.getbuffer())
 
-if rfp_file and btn:
+    # Process the file and store the results in session state
     with st.spinner('Processing files and Generating Proposal...'):
         SaveTextFromPDF(save_path, "rfpInfo.pkl")
-        full_response = InvokeAgent()
-        st.markdown("---")
-        st.write("\n\n")
+        st.session_state['full_response'] = InvokeAgent()
 
-        with st.expander("Open English Proposal"):
-            english_text = ""
-            for item in full_response:
-                english_text += item['english_subsection']
-                st.markdown(item['english_subsection'])
-                st.write("\n\n")
+if st.session_state['full_response'] is not None:
+    full_response = st.session_state['full_response']
 
-        with st.expander("Open Arabic Variant"):
-            arabic_text = ""
+    st.markdown("---")
+    st.write("\n\n")
 
-            for item in full_response:
-                arabic_text += item['arabic_subsection']
-                st.markdown(f"""
+    with st.expander("Open English Proposal"):
+        english_text = ""
+        for item in full_response:
+            english_text += item['english_subsection']
+            st.markdown(item['english_subsection'])
+            st.write("\n\n")
+
+        convert(english_text, "english.html")
+        with open('english.html', 'r', encoding='utf-8') as file:
+            html_content = file.read()
+        html_to_word(html_content, "english.docx", "English Proposal")
+        process_document('english.docx',
+                         'Technical_proposal_english.docx',
+                         apply_rtl=False)
+
+    with st.expander("Open Arabic Variant"):
+        arabic_text = ""
+        for item in full_response:
+            arabic_text += item['arabic_subsection']
+            st.markdown(f"""
 <div style="text-align: right; direction: rtl;">
-                        {item['arabic_subsection']}
-                    </div>
-                    """,
-                            unsafe_allow_html=True)
-                st.write("\n\n")
+                    {item['arabic_subsection']}
+                </div>
+                """,
+                        unsafe_allow_html=True)
+            st.write("\n\n")
+        convert(arabic_text, "arabic.html")
+        with open('arabic.html', 'r', encoding='utf-8') as file:
+            html_content = file.read()
+        html_to_word(html_content, "arabic.docx", "Arabic Proposal")
+        process_document('arabic.docx',
+                         'Technical_proposal_arabic.docx',
+                         apply_rtl=True)
+
+    with open('Technical_proposal_english.docx', 'rb') as file:
+        st.download_button(
+            label="Download English Proposal",
+            data=file,
+            file_name="Technical_proposal_english.docx",
+            mime=
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
+
+    with open('Technical_proposal_arabic.docx', 'rb') as file:
+        st.download_button(
+            label="Download Arabic Proposal",
+            data=file,
+            file_name="Technical_proposal_arabic.docx",
+            mime=
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
 
 else:
     st.error("Please upload RFP File.")
