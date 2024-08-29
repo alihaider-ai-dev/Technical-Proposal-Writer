@@ -52,7 +52,7 @@ def generate_answer(content, task, model):
             },
             temperature=0.0,
             system=
-            "Your main Task is Exaclty replicate the content from English to Arabic Do not miss a single word to be Translated from english to arabic.",
+            "Your main Task is Exaclty replicate the content from English to Arabic Do not miss a single Block or section to be Translated from english to arabic.",
             messages=[{
                 "role": "user",
                 "content": prompt
