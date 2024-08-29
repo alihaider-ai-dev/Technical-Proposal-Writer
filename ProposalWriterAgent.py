@@ -251,7 +251,7 @@ Saudi Vision 2023 Text:
                 result_arb = generate_answer(
                     "", f"""
                     <TASK>
-                    Your Task is to Translate the Given English to Arabic Langauge.
+                    Your Task is to Translate the Given English to Arabic Langauge and must return the complete Arabic Text from the English Text provided.
                     </TASK>
 
                     <FORMATTING_INSTRUCTIONS>
@@ -269,6 +269,8 @@ Saudi Vision 2023 Text:
                     6. Must resemble to the English Content Exactly but in Arabic.
                     7. Do not miss or skip any part.
                     8. The bullet point must be on the right side that is the the bullet . is right oriented.
+                    9. Donot Skip anything return the complete Text in arabic from the English.
+                    10. respond the complete Arabic text from the English each and every section should be completed till the last section.
                     </RESPONSE_INSTRUCTIONS>
 
                     <Table_formatting_instructions>
