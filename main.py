@@ -52,13 +52,11 @@ if st.session_state['full_response'] is not None:
     st.write("\n\n")
 
     with st.expander("Open English Proposal"):
-        english_text = ""
-        for item in full_response:
-            english_text += item['english_subsection']
-            st.markdown(item['english_subsection'])
-            st.write("\n\n")
 
-        convert(english_text, "english.html")
+        st.markdown(full_response['English_proposal'])
+        st.write("\n\n")
+        convert(full_response['English_proposal'], "english.html")
+
         with open('english.html', 'r', encoding='utf-8') as file:
             html_content = file.read()
         html_to_word(html_content, "english.docx", "English Proposal")
@@ -67,17 +65,14 @@ if st.session_state['full_response'] is not None:
                          apply_rtl=False)
 
     with st.expander("Open Arabic Variant"):
-        arabic_text = ""
-        for item in full_response:
-            arabic_text += item['arabic_subsection']
-            st.markdown(f"""
+        st.markdown(f"""
 <div style="text-align: right; direction: rtl;">
-                    {item['arabic_subsection']}
+                    {full_response['arabic_proposal']}
                 </div>
                 """,
-                        unsafe_allow_html=True)
-            st.write("\n\n")
-        convert(arabic_text, "arabic.html")
+                    unsafe_allow_html=True)
+        st.write("\n\n")
+        convert(full_response['arabic_proposal'], "arabic.html")
         with open('arabic.html', 'r', encoding='utf-8') as file:
             html_content = file.read()
         html_to_word(html_content, "arabic.docx", "Arabic Proposal")
