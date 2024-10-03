@@ -377,9 +377,7 @@ def InvokeAgent(focus):
                         scope_of_work['# Project Team']
                     ['questions'][0].keys())[0]:
                     context =f"<Operational_model>{ list(scope_of_work['# Operational Model']['questions'][1].values())[0]}</Operational_model>"
-                 elif question == list(
-                        scope_of_work['# Our Relevant Experience and Previous Projects']
-                    ['questions'][0].keys())[0]:
+                 elif question == list(scope_of_work['# Our Relevant Experience and Previous Projects']['questions'][0].keys())[0]:
                     context = f"\n<Our Competetive Advantage> {list(scope_of_work['# Our understanding in project field or industry']['questions'][1].values())[0]}</Our Competetive Advantage>"
 
                 
