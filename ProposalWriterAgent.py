@@ -230,7 +230,7 @@ scope_of_work = {
         "questions": [
             {
                 """
-            Who are the key members of the project team and what are their roles (enlist as Much Members as Possible and also ther rleveant experiences) ?
+            Who are the key members of the project team and what are their roles (enlist as Much Members as Possible and also their rleveant experiences so to give Value to the Project) ?
             Required Answer:
               Suggest a project team structure , and show How will the team structure support effective project execution?
               "How will the team's expertise contribute to the success of the project?"
@@ -238,8 +238,9 @@ scope_of_work = {
               "How will team collaboration be leveraged to maximize project outcomes?"
               "How does the team’s expertise align with the client’s expectations?"
               Provide concrete info based on company info and project info rather then abstract or general info.
+             
               (use the team members from the Arewqeah company information and provide the concrete names and project Team)
-              Provide the Team Structure in a Diagramatical Representation and allocate the Team Members to the Given Operational Models Units.
+              Provide the Team Structure in a Diagramatical Representation and allocate the Team Members to the Given Operational Models Units who could work in that Unit in a Table.
               """:
                 ""
             },
