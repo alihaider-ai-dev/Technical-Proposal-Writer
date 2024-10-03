@@ -276,7 +276,8 @@ scope_of_work = {
     "# Our Relevant Experience and Previous Projects": {
         "questions": [
             {
-                """What are some examples of similar projects that Arweqah has successfully completed? (just mention these project and give a brief of each one as follow : description, main deliverables, clients, geographical region)""":
+                """
+                What are some examples of similar projects that Arweqah has successfully completed? (focus more the Relevant Projects we did and Discssed in the Competive Advantage Section) (just mention these project and give a brief of each one as follow : description, main deliverables, clients, geographical region)""":
                 ""
             },
         ]
@@ -363,26 +364,25 @@ def InvokeAgent(focus):
                 if question == list(
                         scope_of_work['# Methodology and Project Phases']
                     ['questions'][1].keys())[0]:
-                    context == list(
-                        scope_of_work['# Methodology and Project Phases']
-                        ['questions'][0].values())[0]
+                    context = f"<Project_methodology_and_phases>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}</Project_methodology_and_phases>"
                 elif question == list(
                         scope_of_work['# Methodology and Project Phases']
                     ['questions'][2].keys())[0]:
-                    context == list(
-                        scope_of_work['# Methodology and Project Phases']
-                        ['questions'][1].values())[0]
+                    context = f"<Project_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}</Project_phases_and_tasks>"
                 elif question == list(
                         scope_of_work['# Project Implementation Timeline']
                     ['questions'][0].keys())[0]:
-                    context == f"{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][2].values())[0]}"
+                    context = f"<Project_methodlogy_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][2].values())[0]}</Project_methodlogy_phases_and_tasks>"
                 elif question == list(
                         scope_of_work['# Project Team']
                     ['questions'][0].keys())[0]:
-                    context == list(
-                        scope_of_work['# Operational Model']
-                        ['questions'][1].values())[0]
-                        
+                    context =f"<Operational_model>{ list(scope_of_work['# Operational Model']['questions'][1].values())[0]}</Operational_model>"
+                 elif question == list(
+                        scope_of_work['# Our Relevant Experience and Previous Projects']
+                    ['questions'][0].keys())[0]:
+                    context = f"\n<Our Competetive Advantage> {list(scope_of_work['# Our understanding in project field or industry']['questions'][1].values())[0]}</Our Competetive Advantage>"
+
+                
                 for i in range(3):
                     try:
                         scope_of_work[main_heading]["questions"][i][
