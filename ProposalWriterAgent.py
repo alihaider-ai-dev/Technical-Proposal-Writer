@@ -22,7 +22,7 @@ scope_of_work = {
         "questions": [
             {
                 """
-            What are the client's main objectives and goals for the RFP project?
+            What are the client's main objectives and goals for the RFP project? (provide the Detailed Answer)
             """:
                 ""
             },
@@ -67,7 +67,7 @@ scope_of_work = {
             {
                 """
             What is the current state of the industry or field relevant to the project?
-            Required Answer: (Give some state about the following in a Table: market size – targeted segments – any other relevant state - ...)
+            Required Answer: (Give some state about the following in a Table: market size – targeted segments (which also explains the percentage of the population/seekers being considered/Instrested or tragetted ) – any other relevant state - ...)
             """:
                 ""
             },
@@ -90,6 +90,7 @@ scope_of_work = {
                 """
             What are the local best practices (local experiences) similar or relevant to the project? 
             Required Answer:
+            Also Add the Heading 'local best practices'
             ( Max 03: In the answer, mention the practice name, country, brief about the practice, goals, programs and services, achievements, and impact in numbers.)(Must provide the updated and reliable reference urls/sources/citations and web links)
             """:
                 ""
@@ -103,7 +104,14 @@ scope_of_work = {
                 ""
             },
             {
-                """What is the appropriate operational business model for the project (in this you can mention the units or departments that needed to execute the project, and how will be the collaboration and the integration between them. Also describe how each unit will work and why it's important). You may show the operational model in a diagram. Provide coniseze and complete output. (Make it consize)""":
+                """What is the appropriate operational business model for the project 
+                (
+                In this you can mention the units or departments that needed to execute the project.
+                How will be the collaboration and the integration happen between Different Roles and Departments.
+                Also describe how each unit will work and why it's important).
+                Show the operational model in a diagram.
+                Explain and Provide the Answer in a Detailed Table (columns: Units/Departments, Descriptions, Roles , COlloborations and Integrations) for Better understanding. 
+                """:
                 ""
             },
         ]
@@ -113,7 +121,81 @@ scope_of_work = {
             {
                 """
               What methodology will be used to execute the project? What are the suitable phases to execute the project? (You provide the answer in tables (for each phase) including the following: phase name, brief about the phase, associated activities, deliverables, and timeframe.)
-              What technical tools are necessary for execution in each phase? (for example: if there is some phase related to innovation lab, we can use some tools / techniques or frameworks about innovation) (Provide Detailed answer)
+              What tools (these tools are not software Tools but more like Analysis Tools and Technique, Benchmarking Models, frameworks,Templates, Approaches, Methadologies, Consultation/Coaching Tools etc) are necessary for execution in each phase? 
+              Some of the Examples are Given Below:
+                              {
+                  "Planning and Strategy Phase": [
+                    "SWOT Analysis",
+                    "PESTEL Analysis",
+                    "Balanced Scorecard",
+                    "Gap Analysis",
+                    "Scenario Planning",
+                    "Stakeholder Analysis",
+                    "Risk Assessment Matrix",
+                    "Strategic Roadmapping"
+                  ],
+                  "Operational Implementation Phase": [
+                    "Lean Six Sigma",
+                    "Process Mapping",
+                    "5S Methodology",
+                    "Standard Operating Procedures (SOPs)",
+                    "Key Performance Indicators (KPIs)",
+                    "Gemba Walk",
+                    "Kanban Boards",
+                    "PDCA (Plan-Do-Check-Act) Cycle"
+                  ],
+                  "Quality Management Phase": [
+                    "Total Quality Management (TQM)",
+                    "Quality Function Deployment (QFD)",
+                    "Failure Mode and Effects Analysis (FMEA)",
+                    "Root Cause Analysis",
+                    "Pareto Analysis",
+                    "Control Charts",
+                    "Ishikawa (Fishbone) Diagram",
+                    "Benchmarking"
+                  ],
+                  "Human Resources and Training Phase": [
+                    "Competency Frameworks",
+                    "360-Degree Feedback",
+                    "Learning Management Systems (LMS)",
+                    "Succession Planning Models",
+                    "Employee Engagement Surveys",
+                    "Performance Improvement Plans (PIPs)",
+                    "Mentoring and Coaching Programs",
+                    "Skills Gap Analysis"
+                  ],
+                  "Financial Management Phase": [
+                    "Cost-Benefit Analysis",
+                    "Break-Even Analysis",
+                    "Budgeting Models",
+                    "Financial Ratio Analysis",
+                    "Activity-Based Costing (ABC)",
+                    "Cash Flow Forecasting",
+                    "Return on Investment (ROI) Calculation",
+                    "Variance Analysis"
+                  ],
+                  "Compliance and Risk Management Phase": [
+                    "Compliance Checklists",
+                    "Risk Registers",
+                    "Internal Audit Frameworks",
+                    "Incident Reporting Systems",
+                    "Policy and Procedure Management Systems",
+                    "Compliance Training Programs",
+                    "Ethics Hotlines",
+                    "Regulatory Change Management Tools"
+                  ],
+                  "Continuous Improvement Phase": [
+                    "Kaizen Events",
+                    "Plan-Do-Study-Act (PDSA) Cycle",
+                    "5 Whys Technique",
+                    "Suggestion Systems",
+                    "Lean Waste Analysis",
+                    "Benchmarking Databases",
+                    "Continuous Improvement Maturity Models",
+                    "Visual Management Boards"
+                  ]
+                }
+              (Provide Detailed answer)
             """:
                 ""
             },
