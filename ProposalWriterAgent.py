@@ -230,7 +230,7 @@ scope_of_work = {
         "questions": [
             {
                 """
-            Who are the key members of the project team and what are their roles?
+            Who are the key members of the project team and what are their roles (enlist as Much Members as Possible and also ther rleveant experiences) ?
             Required Answer:
               Suggest a project team structure , and show How will the team structure support effective project execution?
               "How will the team's expertise contribute to the success of the project?"
@@ -239,6 +239,7 @@ scope_of_work = {
               "How does the team’s expertise align with the client’s expectations?"
               Provide concrete info based on company info and project info rather then abstract or general info.
               (use the team members from the Arewqeah company information and provide the concrete names and project Team)
+              Provide the Team Structure in a Diagramatical Representation and allocate the Team Members to the Given Operational Models Units.
               """:
                 ""
             },
@@ -374,7 +375,13 @@ def InvokeAgent(focus):
                         scope_of_work['# Project Implementation Timeline']
                     ['questions'][0].keys())[0]:
                     context == f"{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][2].values())[0]}"
-
+                elif question == list(
+                        scope_of_work['# Project Team']
+                    ['questions'][0].keys())[0]:
+                    context == list(
+                        scope_of_work['# Operational Model']
+                        ['questions'][1].values())[0]
+                        
                 for i in range(3):
                     try:
                         scope_of_work[main_heading]["questions"][i][
