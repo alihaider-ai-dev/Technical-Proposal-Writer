@@ -17,7 +17,8 @@ def icon(emoji: str):
         unsafe_allow_html=True,
     )
 
-scope_of_work = {
+if "scope_of_work" not in st.session_state:
+    st.session_state.scope_of_work =  {
       "Our Understanding of the Scope of Work": {
           "questions": [
               {
@@ -122,121 +123,117 @@ scope_of_work = {
           ]
       }
   }
-if "scope_of_work" not in st.session_state:
-      st.session_state.scope_of_work = scope_of_work
 
 def Pormpt_customization():
-  global scope_of_work
-  st.subheader("Prompts Customization")
-  def display_questions():
-          for section, content in st.session_state.scope_of_work.items():
-              with st.expander(section):
-                  for question_dict in content["questions"]:
-                      for question, required_answer in question_dict.items():
-                          edited_answer = st.text_area(label=question,value=required_answer, height=100)
-                          question_dict[question] = edited_answer
-  display_questions()
+    st.subheader("Prompts Customization")
+    def display_questions():
+        for section, content in st.session_state.scope_of_work.items():
+            with st.expander(section):
+                for question_dict in content["questions"]:
+                    for question, required_answer in question_dict.items():
+                        edited_answer = st.text_area(label=question,value=required_answer, height=100)
+                        question_dict[question] = edited_answer
+    display_questions()
       
-  if st.button("Save",use_container_width=True):
-          formatted_data = {}
-          for key, value in st.session_state.scope_of_work.items():
-              formatted_questions = []
-              for question_dict in value["questions"]:
-                  for question, answer in question_dict.items():
-                      if answer.strip():
-                          formatted_questions.append({f"{question}\nRequired Answer: \n{answer}":""})
-                      else:
-                          formatted_questions.append({f"{question}":""})
-              formatted_data[f"# {key}"] = {"questions": formatted_questions}
-          st.success("Changes saved!")
-          scope_of_work=formatted_data
-  st.session_state.scope_of_work = scope_of_work
-  with st.expander("View Structure"):
-    st.json(st.session_state.scope_of_work)
+    if st.button("Save",use_container_width=True):
+        formatted_data = {}
+        for key, value in st.session_state.scope_of_work.items():
+            formatted_questions = []
+            for question_dict in value["questions"]:
+                for question, answer in question_dict.items():
+                    if answer.strip():
+                        formatted_questions.append({f"{question}\nRequired Answer: \n{answer}":""})
+                    else:
+                        formatted_questions.append({f"{question}":""})
+            formatted_data[f"# {key}"] = {"questions": formatted_questions}
+        st.success("Changes saved!")
+        st.session_state.scope_of_work = formatted_data
+    with st.expander("View Structure"):
+        st.json(st.session_state.scope_of_work)
   
 def proposal_writer():
+    st.subheader("Upload Request for Proposal")
+    with st.expander("View Structure"):
+        st.json(st.session_state.scope_of_work)
+    rfp_file = st.file_uploader("Choose a file for Request for Proposal",
+                                type=['csv', 'xlsx', 'txt', 'pdf'])
   
-  st.subheader("Upload Request for Proposal")
-  with st.expander("View Structure"):
-    st.json(st.session_state.scope_of_work)
-  rfp_file = st.file_uploader("Choose a file for Request for Proposal",
-                              type=['csv', 'xlsx', 'txt', 'pdf'])
+    focus = st.text_input("focused Instructions")
+    btn = st.button("Generate Proposal", use_container_width=True)
+    save_path = None
   
-  focus = st.text_input("focused Instructions")
-  btn = st.button("Generate Proposal", use_container_width=True)
-  save_path = None
+    if 'full_response' not in st.session_state:
+        st.session_state['full_response'] = None
   
-  if 'full_response' not in st.session_state:
-      st.session_state['full_response'] = None
+    if rfp_file is not None and btn:
+        # Save the uploaded file temporarily
+        save_path = os.path.join("tempDir", rfp_file.name)
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
   
-  if rfp_file is not None and btn:
-      # Save the uploaded file temporarily
-      save_path = os.path.join("tempDir", rfp_file.name)
-      os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        with open(save_path, "wb") as f:
+            f.write(rfp_file.getbuffer())
   
-      with open(save_path, "wb") as f:
-          f.write(rfp_file.getbuffer())
+        # Process the file and store the results in session state
+        with st.spinner('Processing files and Generating Proposal...'):
+            SaveTextFromPDF(save_path, "rfpInfo.pkl")
+            st.session_state['full_response'] = InvokeAgent(focus, st.session_state.scope_of_work)
   
-      # Process the file and store the results in session state
-      with st.spinner('Processing files and Generating Proposal...'):
-          SaveTextFromPDF(save_path, "rfpInfo.pkl")
-          st.session_state['full_response'] = InvokeAgent(focus, st.session_state.scope_of_work)
+    if st.session_state['full_response'] is not None:
+        full_response = st.session_state['full_response']
   
-  if st.session_state['full_response'] is not None:
-      full_response = st.session_state['full_response']
+        st.markdown("---")
+        st.write("\n\n")
   
-      st.markdown("---")
-      st.write("\n\n")
+        with st.expander("Open English Proposal"):
   
-      with st.expander("Open English Proposal"):
+            st.markdown(full_response['English_proposal'])
+            st.write("\n\n")
+            convert(full_response['English_proposal'], "english.html")
   
-          st.markdown(full_response['English_proposal'])
-          st.write("\n\n")
-          convert(full_response['English_proposal'], "english.html")
+            with open('english.html', 'r', encoding='utf-8') as file:
+                html_content = file.read()
+            html_to_word(html_content, "english.docx", "English Proposal")
+            process_document('english.docx',
+                             'Technical_proposal_english.docx',
+                             apply_rtl=False)
   
-          with open('english.html', 'r', encoding='utf-8') as file:
-              html_content = file.read()
-          html_to_word(html_content, "english.docx", "English Proposal")
-          process_document('english.docx',
-                           'Technical_proposal_english.docx',
-                           apply_rtl=False)
+        with st.expander("Open Arabic Variant"):
+            st.markdown(f"""
+    <div style="text-align: right; direction: rtl;">
+                        {full_response['arabic_proposal']}
+                    </div>
+                    """,
+                        unsafe_allow_html=True)
+            st.write("\n\n")
+            convert(full_response['arabic_proposal'], "arabic.html")
+            with open('arabic.html', 'r', encoding='utf-8') as file:
+                html_content = file.read()
+            html_to_word(html_content, "arabic.docx", "Arabic Proposal")
+            process_document('arabic.docx',
+                             'Technical_proposal_arabic.docx',
+                             apply_rtl=True)
   
-      with st.expander("Open Arabic Variant"):
-          st.markdown(f"""
-  <div style="text-align: right; direction: rtl;">
-                      {full_response['arabic_proposal']}
-                  </div>
-                  """,
-                      unsafe_allow_html=True)
-          st.write("\n\n")
-          convert(full_response['arabic_proposal'], "arabic.html")
-          with open('arabic.html', 'r', encoding='utf-8') as file:
-              html_content = file.read()
-          html_to_word(html_content, "arabic.docx", "Arabic Proposal")
-          process_document('arabic.docx',
-                           'Technical_proposal_arabic.docx',
-                           apply_rtl=True)
+        with open('Technical_proposal_english.docx', 'rb') as file:
+            st.download_button(
+                label="Download English Proposal",
+                data=file,
+                file_name="Technical_proposal_english.docx",
+                mime=
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            )
   
-      with open('Technical_proposal_english.docx', 'rb') as file:
-          st.download_button(
-              label="Download English Proposal",
-              data=file,
-              file_name="Technical_proposal_english.docx",
-              mime=
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          )
+        with open('Technical_proposal_arabic.docx', 'rb') as file:
+            st.download_button(
+                label="Download Arabic Proposal",
+                data=file,
+                file_name="Technical_proposal_arabic.docx",
+                mime=
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            )
   
-      with open('Technical_proposal_arabic.docx', 'rb') as file:
-          st.download_button(
-              label="Download Arabic Proposal",
-              data=file,
-              file_name="Technical_proposal_arabic.docx",
-              mime=
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          )
-  
-  else:
-      st.error("Please upload RFP File.")
+    else:
+        st.error("Please upload RFP File.")
+
 st.sidebar.image("شعار_أروقة_page-0001-removebg-preview.png",
                  caption="Arweqah Proposal Generation AI")
 st.sidebar.subheader("Page Selection")
@@ -245,8 +242,8 @@ page = st.sidebar.selectbox(
         ["Proposal Writing", "Prompt Customization"]
     )
 
-    # Display content based on selected page
+# Display content based on selected page
 if page == "Proposal Writing":
-        proposal_writer()
+    proposal_writer()
 elif page == "Prompt Customization":
-  Pormpt_customization()
+    Pormpt_customization()
