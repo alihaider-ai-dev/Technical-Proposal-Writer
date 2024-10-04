@@ -137,7 +137,7 @@ def Pormpt_customization():
                           question_dict[question] = edited_answer
   display_questions()
       
-  if st.button("Save"):
+  if st.button("Save",use_container_width=True):
           formatted_data = {}
           for key, value in st.session_state.scope_of_work.items():
               formatted_questions = []
