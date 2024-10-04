@@ -244,8 +244,6 @@ page = st.sidebar.selectbox(
 
     # Display content based on selected page
 if page == "Proposal Writing":
-        st.header("Welcome to the Home Page")
         proposal_writer()
 elif page == "Prompt Customization":
-        st.header("About Us")
-        st.write("Learn more about our company and services.")
+  Pormpt_customization()
