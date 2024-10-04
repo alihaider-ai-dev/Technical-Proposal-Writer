@@ -131,7 +131,7 @@ scope_of_work = {
 if "scope_of_work" not in st.session_state:
     st.session_state.scope_of_work = scope_of_work
 
-if st.button("Edit Prompts"):
+with st.expander("Edit Prompts"):
     st.subheader("RFP Project Questions Editor")
     def display_questions():
         for section, content in st.session_state.scope_of_work.items():
@@ -153,9 +153,12 @@ if st.button("Edit Prompts"):
                     else:
                         formatted_questions.append({f"{question}":""})
             formatted_data[f"# {key}"] = {"questions": formatted_questions}
+            st.success("Changes saved!")
             scope_of_work=formatted_data
 st.session_state.scope_of_work = scope_of_work
-st.success("Changes saved!")
+
+with st.expander("View Structure")
+  st.json(st.session_state.scope_of_work )
       
 rfp_file = st.file_uploader("Choose a file for Request for Proposal",
                             type=['csv', 'xlsx', 'txt', 'pdf'])
