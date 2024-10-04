@@ -153,7 +153,8 @@ if st.button("Edit Prompts"):
                     else:
                         formatted_questions.append({f"{question}":""})
             formatted_data[f"# {key}"] = {"questions": formatted_questions}
-st.session_state.scope_of_work = formatted_data
+            scope_of_work=formatted_data
+st.session_state.scope_of_work = scope_of_work
 st.success("Changes saved!")
       
 rfp_file = st.file_uploader("Choose a file for Request for Proposal",
