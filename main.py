@@ -130,7 +130,6 @@ scope_of_work = {
 
 if "scope_of_work" not in st.session_state:
     st.session_state.scope_of_work = scope_of_work
-    
 
 if st.button("Edit Prompts"):
     st.subheader("RFP Project Questions Editor")
@@ -144,7 +143,6 @@ if st.button("Edit Prompts"):
     display_questions()
     
     if st.button("Save"):
-        # Print the updated structure in JSON format
         formatted_data = {}
         for key, value in st.session_state.scope_of_work.items():
             formatted_questions = []
