@@ -130,7 +130,7 @@ scope_of_work = {
 
 if "scope_of_work" not in st.session_state:
     st.session_state.scope_of_work = scope_of_work
-formatted_data = {}
+
 if st.button("Edit Prompts"):
     st.subheader("RFP Project Questions Editor")
     def display_questions():
@@ -143,7 +143,7 @@ if st.button("Edit Prompts"):
     display_questions()
     
     if st.button("Save"):
-        
+        formatted_data = {}
         for key, value in st.session_state.scope_of_work.items():
             formatted_questions = []
             for question_dict in value["questions"]:
