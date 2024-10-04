@@ -148,14 +148,17 @@ def Pormpt_customization():
                       else:
                           formatted_questions.append({f"{question}":""})
               formatted_data[f"# {key}"] = {"questions": formatted_questions}
-            st.success("Changes saved!")
-            scope_of_work=formatted_data
+          st.success("Changes saved!")
+          scope_of_work=formatted_data
   st.session_state.scope_of_work = scope_of_work
   with st.expander("View Structure"):
     st.json(st.session_state.scope_of_work)
   
 def proposal_writer():
+  
   st.subheader("Upload Request for Proposal")
+  with st.expander("View Structure"):
+    st.json(st.session_state.scope_of_work)
   rfp_file = st.file_uploader("Choose a file for Request for Proposal",
                               type=['csv', 'xlsx', 'txt', 'pdf'])
   
