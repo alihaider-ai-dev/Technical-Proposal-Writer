@@ -157,7 +157,7 @@ with st.expander("Edit Prompts"):
             scope_of_work=formatted_data
 st.session_state.scope_of_work = scope_of_work
 
-with st.expander("View Structure")
+with st.expander("View Structure"):
   st.json(st.session_state.scope_of_work )
       
 rfp_file = st.file_uploader("Choose a file for Request for Proposal",
