@@ -283,7 +283,35 @@ scope_of_work = {
         ]
     }
 }
+if "scope_of_work" not in st.session_state:
+    st.session_state.scope_of_work = scope_of_work
+    
 
+if st.button("Edit Prompts"):
+    st.title("RFP Project Questions Editor")
+    def display_questions():
+        for section, content in st.session_state.scope_of_work.items():
+            with st.expander(section, expanded=True):
+                for question_dict in content["questions"]:
+                    for question, required_answer in question_dict.items():
+                        edited_answer = st.text_area(label=question,value=required_answer, height=100)
+                        question_dict[question] = edited_answer
+    display_questions()
+    
+    if st.button("Save"):
+        # Print the updated structure in JSON format
+        formatted_data = {}
+        for key, value in st.session_state.scope_of_work.items():
+            formatted_questions = []
+            for question_dict in value["questions"]:
+                for question, answer in question_dict.items():
+                    if answer.strip():
+                        formatted_questions.append({f"{question}\nRequired Answer: \n{answer}":""})
+                    else:
+                        formatted_questions.append({f"{question}":""})
+            formatted_data[f"# {key}"] = {"questions": formatted_questions}
+        st.session_state.scope_of_work = formatted_data
+        st.success("Changes saved!")
 
 def getResponse(question, context, f_ins):
     rfp = read_text_from_pkl("rfpInfo.pkl")
@@ -357,33 +385,33 @@ def InvokeAgent(focus):
             {f_ins}
         </focused_instructions>"""
 
-    for main_heading, questions in scope_of_work.items():
+    for main_heading, questions in st.session_state.scope_of_work.items():
         for i, item in enumerate(questions['questions']):
             for question, answer in item.items():
                 context = None
                 if question == list(
-                        scope_of_work['# Methodology and Project Phases']
+                        st.session_state.scope_of_work['# Methodology and Project Phases']
                     ['questions'][1].keys())[0]:
-                    context = f"<Project_methodology_and_phases>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}</Project_methodology_and_phases>"
+                    context = f"<Project_methodology_and_phases>{list(st.session_state.scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}</Project_methodology_and_phases>"
                 elif question == list(
-                        scope_of_work['# Methodology and Project Phases']
+                        st.session_state.scope_of_work['# Methodology and Project Phases']
                     ['questions'][2].keys())[0]:
-                    context = f"<Project_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}</Project_phases_and_tasks>"
+                    context = f"<Project_phases_and_tasks>{list(st.session_state.scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}</Project_phases_and_tasks>"
                 elif question == list(
-                        scope_of_work['# Project Implementation Timeline']
+                        st.session_state.scope_of_work['# Project Implementation Timeline']
                     ['questions'][0].keys())[0]:
-                    context = f"<Project_methodlogy_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][2].values())[0]}</Project_methodlogy_phases_and_tasks>"
+                    context = f"<Project_methodlogy_phases_and_tasks>{list(st.session_state.scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}\n{list(st.session_state.scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}\n{list(st.session_state.scope_of_work['# Methodology and Project Phases']['questions'][2].values())[0]}</Project_methodlogy_phases_and_tasks>"
                 elif question == list(
-                        scope_of_work['# Project Team']
+                        st.session_state.scope_of_work['# Project Team']
                     ['questions'][0].keys())[0]:
-                    context =f"<Operational_model>{ list(scope_of_work['# Operational Model']['questions'][1].values())[0]}</Operational_model>"
-                elif question == list(scope_of_work['# Our Relevant Experience and Previous Projects']['questions'][0].keys())[0]:
-                    context = f"\n<Our Competetive Advantage> {list(scope_of_work['# Our understanding in project field or industry']['questions'][1].values())[0]}</Our Competetive Advantage>"
+                    context =f"<Operational_model>{ list(st.session_state.scope_of_work['# Operational Model']['questions'][1].values())[0]}</Operational_model>"
+                elif question == list(st.session_state.scope_of_work['# Our Relevant Experience and Previous Projects']['questions'][0].keys())[0]:
+                    context = f"\n<Our Competetive Advantage> {list(st.session_state.scope_of_work['# Our understanding in project field or industry']['questions'][1].values())[0]}</Our Competetive Advantage>"
 
                 
                 for i in range(3):
                     try:
-                        scope_of_work[main_heading]["questions"][i][
+                        st.session_state.scope_of_work[main_heading]["questions"][i][
                             question] = getResponse(question, context, focus)
                         break
                     except Exception as e:
@@ -395,7 +423,7 @@ def InvokeAgent(focus):
     English_proposal = """"""
     arabic_proposal = """"""
 
-    for main_heading, questions in scope_of_work.items():
+    for main_heading, questions in st.session_state.scope_of_work.items():
         English_proposal += main_heading + "\n"
         arabic_proposal += translate(main_heading)
 
