@@ -149,7 +149,7 @@ def Pormpt_customization():
     display_questions()
     if st.button("Save",use_container_width=True):
         st.success("Changes saved!")
-        st.session_state.scope_of_work = st.session_state.scope_of_work =
+        st.session_state.scope_of_work = st.session_state.scope_of_work 
     with st.expander("View Structure"):
         st.json(st.session_state.scope_of_work)
   
