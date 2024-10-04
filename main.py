@@ -125,7 +125,7 @@ scope_of_work = {
 st.sidebar.image("شعار_أروقة_page-0001-removebg-preview.png",
                  caption="Arweqah Proposal Generation AI")
 st.sidebar.subheader("Page Selection")
-    page = st.sidebar.selectbox(
+page = st.sidebar.selectbox(
         "Choose a page",
         ["Proposal Writing", "Prompt Customization"]
     )
