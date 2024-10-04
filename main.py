@@ -122,21 +122,7 @@ scope_of_work = {
           ]
       }
   }
-st.sidebar.image("شعار_أروقة_page-0001-removebg-preview.png",
-                 caption="Arweqah Proposal Generation AI")
-st.sidebar.subheader("Page Selection")
-page = st.sidebar.selectbox(
-        "Choose a page",
-        ["Proposal Writing", "Prompt Customization"]
-    )
 
-    # Display content based on selected page
-if page == "Proposal Writing":
-        st.header("Welcome to the Home Page")
-        proposal_writer()
-elif page == "Prompt Customization":
-        st.header("About Us")
-        st.write("Learn more about our company and services.")
 
 def Pormpt_customization():
   if "scope_of_work" not in st.session_state:
@@ -248,3 +234,18 @@ def proposal_writer():
   
   else:
       st.error("Please upload RFP File.")
+st.sidebar.image("شعار_أروقة_page-0001-removebg-preview.png",
+                 caption="Arweqah Proposal Generation AI")
+st.sidebar.subheader("Page Selection")
+page = st.sidebar.selectbox(
+        "Choose a page",
+        ["Proposal Writing", "Prompt Customization"]
+    )
+
+    # Display content based on selected page
+if page == "Proposal Writing":
+        st.header("Welcome to the Home Page")
+        proposal_writer()
+elif page == "Prompt Customization":
+        st.header("About Us")
+        st.write("Learn more about our company and services.")
