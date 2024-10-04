@@ -124,6 +124,19 @@ if "scope_of_work" not in st.session_state:
       }
   }
 
+def update_structure(scope_of_work):
+  formatted_data = {}
+  for key, value in scope_of_work.items():
+            formatted_questions = []
+            for question_dict in value["questions"]:
+                for question, answer in question_dict.items():
+                    if answer.strip():
+                        formatted_questions.append({f"{question}\nRequired Answer: \n{answer}":""})
+                    else:
+                        formatted_questions.append({f"{question}":""})
+            formatted_data[f"# {key}"] = {"questions": formatted_questions}
+  return formatted_data
+          
 def Pormpt_customization():
     st.subheader("Prompts Customization")
     def display_questions():
@@ -134,27 +147,17 @@ def Pormpt_customization():
                         edited_answer = st.text_area(label=question,value=required_answer, height=100)
                         question_dict[question] = edited_answer
     display_questions()
-      
     if st.button("Save",use_container_width=True):
-        formatted_data = {}
-        for key, value in st.session_state.scope_of_work.items():
-            formatted_questions = []
-            for question_dict in value["questions"]:
-                for question, answer in question_dict.items():
-                    if answer.strip():
-                        formatted_questions.append({f"{question}\nRequired Answer: \n{answer}":""})
-                    else:
-                        formatted_questions.append({f"{question}":""})
-            formatted_data[f"# {key}"] = {"questions": formatted_questions}
         st.success("Changes saved!")
-        st.session_state.scope_of_work = formatted_data
+        st.session_state.scope_of_work = st.session_state.scope_of_work =
     with st.expander("View Structure"):
         st.json(st.session_state.scope_of_work)
   
 def proposal_writer():
     st.subheader("Upload Request for Proposal")
+    formatted_data=update_structure(st.session_state.scope_of_work)
     with st.expander("View Structure"):
-        st.json(st.session_state.scope_of_work)
+        st.json(formatted_data)
     rfp_file = st.file_uploader("Choose a file for Request for Proposal",
                                 type=['csv', 'xlsx', 'txt', 'pdf'])
   
@@ -176,7 +179,7 @@ def proposal_writer():
         # Process the file and store the results in session state
         with st.spinner('Processing files and Generating Proposal...'):
             SaveTextFromPDF(save_path, "rfpInfo.pkl")
-            st.session_state['full_response'] = InvokeAgent(focus, st.session_state.scope_of_work)
+            st.session_state['full_response'] = InvokeAgent(focus, formatted_data)
   
     if st.session_state['full_response'] is not None:
         full_response = st.session_state['full_response']
