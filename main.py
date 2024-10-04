@@ -136,7 +136,7 @@ if st.button("Edit Prompts"):
     st.subheader("RFP Project Questions Editor")
     def display_questions():
         for section, content in st.session_state.scope_of_work.items():
-            with st.expander(section, expanded=True):
+            with st.expander(section):
                 for question_dict in content["questions"]:
                     for question, required_answer in question_dict.items():
                         edited_answer = st.text_area(label=question,value=required_answer, height=100)
