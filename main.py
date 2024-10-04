@@ -122,11 +122,11 @@ scope_of_work = {
           ]
       }
   }
-
+if "scope_of_work" not in st.session_state:
+      st.session_state.scope_of_work = scope_of_work
 
 def Pormpt_customization():
-  if "scope_of_work" not in st.session_state:
-      st.session_state.scope_of_work = scope_of_work
+  global scope_of_work
   st.subheader("Prompts Customization")
   def display_questions():
           for section, content in st.session_state.scope_of_work.items():
