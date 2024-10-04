@@ -133,14 +133,12 @@ if "scope_of_work" not in st.session_state:
 
 with st.expander("Edit Prompts"):
     st.subheader("RFP Project Questions Editor")
-    def display_questions():
-        for section, content in st.session_state.scope_of_work.items():
-            with st.expander(section):
-                for question_dict in content["questions"]:
-                    for question, required_answer in question_dict.items():
-                        edited_answer = st.text_area(label=question,value=required_answer, height=100)
-                        question_dict[question] = edited_answer
-    display_questions()
+    for section, content in st.session_state.scope_of_work.items():
+        st.markdown(f"### {section}")
+        for question_dict in content["questions"]:
+            for question, required_answer in question_dict.items():
+                edited_answer = st.text_area(label=question, value=required_answer, height=100)
+                question_dict[question] = edited_answer
     
     if st.button("Save"):
         formatted_data = {}
@@ -153,8 +151,8 @@ with st.expander("Edit Prompts"):
                     else:
                         formatted_questions.append({f"{question}":""})
             formatted_data[f"# {key}"] = {"questions": formatted_questions}
-            st.success("Changes saved!")
-            scope_of_work=formatted_data
+        st.success("Changes saved!")
+        scope_of_work = formatted_data
 st.session_state.scope_of_work = scope_of_work
 
 with st.expander("View Structure"):
