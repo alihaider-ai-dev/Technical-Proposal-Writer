@@ -62,10 +62,10 @@ def getResponse(question, context, f_ins):
     }]
 
     if context:
-        systems_info.append({{
+        systems_info.append({
             "type": "text",
             "text": f"\n{context}\n",
-        }})
+        })
 
     response = client.messages.create(
         model="claude-3-5-sonnet-20240620",
@@ -84,48 +84,54 @@ def getResponse(question, context, f_ins):
 
 
 def InvokeAgent(focus,scope_of_work):
+     
+
     f_ins = ''
     if len(focus):
         focus = f"""<focused_instructions>
             {f_ins}
         </focused_instructions>"""
-    print("agent Invoked")
     for main_heading, questions in scope_of_work.items():
         for i, item in enumerate(questions['questions']):
             for question, answer in item.items():
-                print(question)
                 context = None
-                if question == list(
-                        scope_of_work['# Methodology and Project Phases']
+                try:
+                    if question == list(
+                            scope_of_work['# Methodology and Project Phases']
                     ['questions'][1].keys())[0]:
-                    context = f"<Project_methodology_and_phases>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}</Project_methodology_and_phases>"
-                elif question == list(
-                        scope_of_work['# Methodology and Project Phases']
-                    ['questions'][2].keys())[0]:
-                    context = f"<Project_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}</Project_phases_and_tasks>"
-                elif question == list(
-                        scope_of_work['# Project Implementation Timeline']
-                    ['questions'][0].keys())[0]:
-                    context = f"<Project_methodlogy_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][2].values())[0]}</Project_methodlogy_phases_and_tasks>"
-                elif question == list(
-                        scope_of_work['# Project Team']
-                    ['questions'][0].keys())[0]:
-                    context =f"<Operational_model>{ list(scope_of_work['# Operational Model']['questions'][1].values())[0]}</Operational_model>"
-                elif question == list(scope_of_work['# Our Relevant Experience and Previous Projects']['questions'][0].keys())[0]:
-                    context = f"\n<Our Competetive Advantage> {list(scope_of_work['# Our understanding in project field or industry']['questions'][1].values())[0]}</Our Competetive Advantage>"
-
+                        context = f"<Project_methodology_and_phases>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}</Project_methodology_and_phases>"
+                    elif question == list(
+                            scope_of_work['# Methodology and Project Phases']
+                        ['questions'][2].keys())[0]:
+                        context = f"<Project_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}</Project_phases_and_tasks>"
+                    elif question == list(
+                            scope_of_work['# Project Implementation Timeline']
+                        ['questions'][0].keys())[0]:
+                        context = f"<Project_methodlogy_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][2].values())[0]}</Project_methodlogy_phases_and_tasks>"
+                    elif question == list(
+                            scope_of_work['# Project Team']
+                        ['questions'][0].keys())[0]:
+                        context =f"<Operational_model>{ list(scope_of_work['# Operational Model']['questions'][1].values())[0]}</Operational_model>"
+                    elif question == list(scope_of_work['# Our Relevant Experience and Previous Projects']['questions'][0].keys())[0]:
+                        context = f"\n<Our Competetive Advantage> {list(scope_of_work['# Our understanding in project field or industry']['questions'][1].values())[0]}</Our Competetive Advantage>"
+                except Exception as e:
+                    print(e,"Error in context")
                 
-                for i in range(3):
+
+                for j in range(3):
                     try:
+                        print('000000000000000000000000000000\n',scope_of_work[main_heading]["questions"][i][question],']]]]]]]]]]]]]]]]]]]\n')
                         scope_of_work[main_heading]["questions"][i][
                             question] = getResponse(question, context, focus)
+                        
                         break
                     except Exception as e:
-                        print(e)
+                        print(e,"Error in getResponse")
                         import time
                         time.sleep(30)
 
                 break
+        
     English_proposal = """"""
     arabic_proposal = """"""
 
