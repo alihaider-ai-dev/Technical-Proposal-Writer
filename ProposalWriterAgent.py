@@ -93,24 +93,24 @@ def InvokeAgent(focus,scope_of_work):
         for i, item in enumerate(questions['questions']):
             for question, answer in item.items():
                 context = None
-                # if question == list(
-                #         scope_of_work['# Methodology and Project Phases']
-                #     ['questions'][1].keys())[0]:
-                #     context = f"<Project_methodology_and_phases>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}</Project_methodology_and_phases>"
-                # elif question == list(
-                #         scope_of_work['# Methodology and Project Phases']
-                #     ['questions'][2].keys())[0]:
-                #     context = f"<Project_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}</Project_phases_and_tasks>"
-                # elif question == list(
-                #         scope_of_work['# Project Implementation Timeline']
-                #     ['questions'][0].keys())[0]:
-                #     context = f"<Project_methodlogy_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][2].values())[0]}</Project_methodlogy_phases_and_tasks>"
-                # elif question == list(
-                #         scope_of_work['# Project Team']
-                #     ['questions'][0].keys())[0]:
-                #     context =f"<Operational_model>{ list(scope_of_work['# Operational Model']['questions'][1].values())[0]}</Operational_model>"
-                # elif question == list(scope_of_work['# Our Relevant Experience and Previous Projects']['questions'][0].keys())[0]:
-                #     context = f"\n<Our Competetive Advantage> {list(scope_of_work['# Our understanding in project field or industry']['questions'][1].values())[0]}</Our Competetive Advantage>"
+                if question == list(
+                        scope_of_work['# Methodology and Project Phases']
+                    ['questions'][1].keys())[0]:
+                    context = f"<Project_methodology_and_phases>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}</Project_methodology_and_phases>"
+                elif question == list(
+                        scope_of_work['# Methodology and Project Phases']
+                    ['questions'][2].keys())[0]:
+                    context = f"<Project_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}</Project_phases_and_tasks>"
+                elif question == list(
+                        scope_of_work['# Project Implementation Timeline']
+                    ['questions'][0].keys())[0]:
+                    context = f"<Project_methodlogy_phases_and_tasks>{list(scope_of_work['# Methodology and Project Phases']['questions'][0].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][1].values())[0]}\n{list(scope_of_work['# Methodology and Project Phases']['questions'][2].values())[0]}</Project_methodlogy_phases_and_tasks>"
+                elif question == list(
+                        scope_of_work['# Project Team']
+                    ['questions'][0].keys())[0]:
+                    context =f"<Operational_model>{ list(scope_of_work['# Operational Model']['questions'][1].values())[0]}</Operational_model>"
+                elif question == list(scope_of_work['# Our Relevant Experience and Previous Projects']['questions'][0].keys())[0]:
+                    context = f"\n<Our Competetive Advantage> {list(scope_of_work['# Our understanding in project field or industry']['questions'][1].values())[0]}</Our Competetive Advantage>"
 
                 
                 for i in range(3):
@@ -124,7 +124,6 @@ def InvokeAgent(focus,scope_of_work):
                         time.sleep(30)
 
                 break
-        break
     English_proposal = """"""
     arabic_proposal = """"""
 
