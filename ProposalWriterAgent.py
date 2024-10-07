@@ -90,7 +90,7 @@ def InvokeAgent(focus,scope_of_work):
             {f_ins}
         </focused_instructions>"""
 
-    for main_heading, questions in scope_of_work.items()[:1:
+    for main_heading, questions in scope_of_work.items()[:1]:
         for i, item in enumerate(questions['questions']):
             for question, answer in item.items():
                 context = None
