@@ -89,9 +89,11 @@ def InvokeAgent(focus,scope_of_work):
         focus = f"""<focused_instructions>
             {f_ins}
         </focused_instructions>"""
+    print("agent Invoked")
     for main_heading, questions in scope_of_work.items():
         for i, item in enumerate(questions['questions']):
             for question, answer in item.items():
+                print(question)
                 context = None
                 if question == list(
                         scope_of_work['# Methodology and Project Phases']
