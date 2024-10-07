@@ -124,7 +124,7 @@ def InvokeAgent(focus,scope_of_work):
                         time.sleep(30)
 
                 break
-     break
+        break
     English_proposal = """"""
     arabic_proposal = """"""
 
