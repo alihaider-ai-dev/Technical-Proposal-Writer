@@ -89,8 +89,7 @@ def InvokeAgent(focus,scope_of_work):
         focus = f"""<focused_instructions>
             {f_ins}
         </focused_instructions>"""
-
-    for main_heading, questions in scope_of_work.items()[:1]:
+    for main_heading, questions in scope_of_work.items():
         for i, item in enumerate(questions['questions']):
             for question, answer in item.items():
                 context = None
@@ -125,6 +124,7 @@ def InvokeAgent(focus,scope_of_work):
                         time.sleep(30)
 
                 break
+     break
     English_proposal = """"""
     arabic_proposal = """"""
 
