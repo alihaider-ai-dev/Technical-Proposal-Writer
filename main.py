@@ -115,7 +115,7 @@ if "scope_of_work" not in st.session_state:
         "Why Arweqah": {
             "questions": [
                 {
-                    "1. What are Arweqah's unique strengths and capabilities relevant to this project )RFP)?":
+                    "1. What are Arweqah's unique strengths and capabilities relevant to this project RFP?":
                     ""
                 },
             ]
