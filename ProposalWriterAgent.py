@@ -120,7 +120,6 @@ def InvokeAgent(focus,scope_of_work):
 
                 for j in range(3):
                     try:
-                        print('000000000000000000000000000000\n',scope_of_work[main_heading]["questions"][i][question],']]]]]]]]]]]]]]]]]]]\n')
                         scope_of_work[main_heading]["questions"][i][
                             question] = getResponse(question, context, focus)
 
