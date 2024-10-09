@@ -97,9 +97,3 @@ The application generates:
 - langchain
 - (other dependencies as listed in `requirements.txt`)
 
-## Future Improvements
-
-- Implement error handling and retry mechanisms for API calls
-- Add more customization options for proposal structure
-- Improve the Arabic translation process
-- Implement user authentication and proposal saving features
